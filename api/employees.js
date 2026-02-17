@@ -12,12 +12,11 @@ router.get("/", (req, res) => {
 
 // Note: this middleware has to come first! Otherwise, Express will treat
 // "random" as the argument to the `id` parameter of /employees/:id.
-router.get("/employees/random", (req, res) => {
-  const randomIndex = Math.floor(Math.random() * employees.length);
-  res.send(employees[randomIndex]);
+router.get("/random", (req, res) => {
+  res.send(getRandomEmployee());
 });
 
-router.get("/employees/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   const { id } = req.params;
 
   // req.params are always strings, so we need to convert `id` into a number

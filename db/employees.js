@@ -20,8 +20,8 @@ export function getEmployee(i) {
 }
 
 export function getRandomEmployee() {
-  const randNum = Math.floor(Math.random()*employees.length);
-  return employees[randNum];
+  const randomIndex = Math.floor(Math.random() * employees.length);
+  return employees[randomIndex];
 }
 
 /* WARNING: this must remain the default export in order for the tests to work! */
