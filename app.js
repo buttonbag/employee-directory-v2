@@ -2,33 +2,51 @@ import express from "express";
 const app = express();
 export default app;
 
-import employees from "#db/employees";
+// import employees from "#db/employees";
+import employeesRouter from "#api/employees";
+
+/**
+ * body-parsing middleware
+ */
+app.use(express.json());
+
+app.use((req, res, next)=>{
+  console.log(req.method + " " + req.originalUrl);
+  
+  next();
+});
 
 app.get("/", (req, res) => {
   res.send("Hello employees!");
 });
 
-app.get("/employees", (req, res) => {
-  res.send(employees);
-});
+// app.get("/employees", (req, res) => {
+//   res.send(employees);
+// });
 
-// Note: this middleware has to come first! Otherwise, Express will treat
-// "random" as the argument to the `id` parameter of /employees/:id.
-app.get("/employees/random", (req, res) => {
-  const randomIndex = Math.floor(Math.random() * employees.length);
-  res.send(employees[randomIndex]);
-});
+// // Note: this middleware has to come first! Otherwise, Express will treat
+// // "random" as the argument to the `id` parameter of /employees/:id.
+// app.get("/employees/random", (req, res) => {
+//   const randomIndex = Math.floor(Math.random() * employees.length);
+//   res.send(employees[randomIndex]);
+// });
 
-app.get("/employees/:id", (req, res) => {
-  const { id } = req.params;
+// app.get("/employees/:id", (req, res) => {
+//   const { id } = req.params;
 
-  // req.params are always strings, so we need to convert `id` into a number
-  // before we can use it to find the employee
-  const employee = employees.find((e) => e.id === +id);
+//   // req.params are always strings, so we need to convert `id` into a number
+//   // before we can use it to find the employee
+//   const employee = employees.find((e) => e.id === +id);
 
-  if (!employee) {
-    return res.status(404).send("Employee not found");
-  }
+//   if (!employee) {
+//     return res.status(404).send("Employee not found");
+//   }
 
-  res.send(employee);
-});
+//   res.send(employee);
+// });
+
+app.use("/employees", employeesRouter);
+
+app.use((err, req, res, next)=>{
+  res.status(500).send("Something went wrong.");
+})

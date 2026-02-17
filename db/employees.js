@@ -11,5 +11,18 @@ const employees = [
   { id: 10, name: "Gwen Grollmann" },
 ];
 
+export function getEmployees() {
+  return employees;
+}
+
+export function getEmployee(i) {
+  return employees[i];
+}
+
+export function getRandomEmployee() {
+  const randNum = Math.floor(Math.random()*employees.length);
+  return employees[randNum];
+}
+
 /* WARNING: this must remain the default export in order for the tests to work! */
 export default employees;
