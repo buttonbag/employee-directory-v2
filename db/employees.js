@@ -26,5 +26,15 @@ export function getRandomEmployee() {
   return employees[randomIndex];
 }
 
+/**
+ * creates a new employee with the given name
+ * assigns a new id
+ */
+export function addEmployee(name) {
+  const employee = {id: employees.length+1, name};
+  employees.push(employee);
+  return employee;
+}
+
 /* WARNING: this must remain the default export in order for the tests to work! */
 export default employees;

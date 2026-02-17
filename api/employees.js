@@ -3,11 +3,23 @@ import express from "express";
 
 const router = express.Router();
 
-import { getEmployees, getEmployee, getRandomEmployee } from "#db/employees";
+import { getEmployees, getEmployee, getRandomEmployee, addEmployee } from "#db/employees";
 
 router.get("/", (req, res) => {
   const employees = getEmployees();
   res.send(employees);
+});
+
+router.post("/", (req, res)=>{
+  if (!req.body) {
+    return res.status(400).send("Request must have a body.");
+  }
+  const {name} = req.body;
+  if (!name) {
+    return res.status(400).send("New employee must have a name.");
+  }
+  const newEmployee = addEmployee(name);
+  res.status(201).send(newEmployee);
 });
 
 // Note: this middleware has to come first! Otherwise, Express will treat
@@ -15,6 +27,7 @@ router.get("/", (req, res) => {
 router.get("/random", (req, res) => {
   res.send(getRandomEmployee());
 });
+
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
