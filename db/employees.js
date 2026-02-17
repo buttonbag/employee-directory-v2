@@ -15,8 +15,10 @@ export function getEmployees() {
   return employees;
 }
 
-export function getEmployee(i) {
-  return employees[i];
+// req.params are always strings, so we need to convert `id` into a number
+// before we can use it to find the employee
+export function getEmployee(id) {
+  return employees.find((e) => e.id === +id);
 }
 
 export function getRandomEmployee() {

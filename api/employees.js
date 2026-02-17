@@ -19,9 +19,7 @@ router.get("/random", (req, res) => {
 router.get("/:id", (req, res) => {
   const { id } = req.params;
 
-  // req.params are always strings, so we need to convert `id` into a number
-  // before we can use it to find the employee
-  const employee = employees.find((e) => e.id === +id);
+  const employee = getEmployee(id);
 
   if (!employee) {
     return res.status(404).send("Employee not found");
